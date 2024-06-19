@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES6",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "jsx": "react-jsx",
+    "sourceMap": true,
+    "paths": {
+      "*": [
+        "node_modules/*"
+      ]
+    },
+    "allowSyntheticDefaultImports": true
+  }
+}
