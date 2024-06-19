@@ -2,8 +2,14 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { AppController } from "./app.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { SmartModule } from "./smart/smart.module";
-import { HomeOrmEntity } from "./smart/home.orm-entity";
+import { HomeOrmEntity } from "./home/home.orm-entity";
+import { RoomOrmEntity } from "./room/room.orm-entity";
+import { DeviceOrmEntity } from "./device/device.orm-entity";
+import { HomeModule } from "./home/home.module";
+import { RoomModule } from "./room/room.module";
+import { DeviceModule } from "./device/device.module";
+import { UserModule } from "./user/user.module";
+import { UserOrmEntity } from "./user/user.orm-entity";
 
 @Module({
   imports: [
@@ -21,11 +27,19 @@ import { HomeOrmEntity } from "./smart/home.orm-entity";
         password: configService.get<string>("DB_PASSWORD"),
         database: configService.get<string>("DB_DATABASE"),
         logging: false,
-        entities: [HomeOrmEntity],
+        entities: [
+          HomeOrmEntity,
+          RoomOrmEntity,
+          DeviceOrmEntity,
+          UserOrmEntity,
+        ],
         synchronize: true,
       }),
     }),
-    SmartModule,
+    UserModule,
+    HomeModule,
+    RoomModule,
+    DeviceModule,
   ],
   controllers: [AppController],
 })
