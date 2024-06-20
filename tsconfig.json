@@ -7,13 +7,19 @@
     "strict": false,
     "skipLibCheck": true,
     "baseUrl": "./",
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "sourceMap": true,
     "paths": {
       "*": [
         "node_modules/*"
-      ]
+      ],
+      "app/*": ["src/client/app/*"],
+      "pages/*": ["src/client/pages/*"],
+      "widgets/*": ["src/client/widgets/*"],
+      "features/*": ["src/client/features/*"],
+      "entities/*": ["src/client/entities/*"],
+      "shared/*": ["src/client/shared/*"]
     },
     "allowSyntheticDefaultImports": true
-  }
+  },
 }

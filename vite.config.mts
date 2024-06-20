@@ -9,10 +9,28 @@ const envFilePath = path.resolve(__dirname, ".env");
 const envResult = dotenvConfig( { path: envFilePath });
 
 export default defineConfig({
-    root: "./src/client",
+    root: "src/client",
     plugins: [svelte({
-        preprocess: sveltePreprocess()
+        preprocess: sveltePreprocess({
+            scss: {},
+            typescript: {
+                tsconfigFile: "./tsconfig.svelte.json",
+            },
+        })
     })],
+    optimizeDeps: {
+        include: ["**/*.svg"],
+    },
+    resolve: {
+        alias: {
+            "app": path.resolve(__dirname, "src/client/app"),
+            "pages": path.resolve(__dirname, "src/client/pages"),
+            "widgets": path.resolve(__dirname, "src/client/widgets"),
+            "features": path.resolve(__dirname, "src/client/features"),
+            "entities": path.resolve(__dirname, "src/client/entities"),
+            "shared": path.resolve(__dirname, "src/client/shared"),
+        }
+    },
     define: {
         'process.env': { ...envResult.parsed },
     },
@@ -24,6 +42,12 @@ export default defineConfig({
                 target: `${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`,
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/api^\//, '')
+            },
+            '/socket.io': {
+                target: `${process.env.SERVER_HOST}:${process.env.SERVER_PORT}`,
+                changeOrigin: true,
+                ws: true,
+                rewrite: (path) => path.replace(/^\/socket.io^\//, '')
             }
         }
     },
@@ -32,5 +56,5 @@ export default defineConfig({
         assetsDir: '.',
         sourcemap: false,
         emptyOutDir: true,
-    }
+    },
 })

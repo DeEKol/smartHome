@@ -1,0 +1,24 @@
+{
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "compilerOptions": {
+    "strict": false,
+    "module": "ESNext",
+    "target": "ESNext",
+//    "moduleResolution": "Node",
+//    "esModuleInterop": true,
+//    "skipLibCheck": true,
+    "resolveJsonModule": true,
+//    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "allowJs": true,
+    "checkJs": true,
+//    "jsx": "preserve",
+//    "types": ["svelte"],
+//    "lib": ["DOM", "ESNext"],
+    "baseUrl": ".",
+//    "paths": {
+//      "@/pages/*": ["src/client/pages/*"],
+//    },
+  },
+  "include": ["src/client/**/*","src/client/**/*.svelte", "src/client/**/*.js", "src/client/**/*.ts"]
+}
