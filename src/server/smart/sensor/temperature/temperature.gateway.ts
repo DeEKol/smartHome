@@ -17,6 +17,7 @@ import { TSetDegreesResponse } from "../../../../common/TemperatureTypes";
 import { TemperatureService } from "./temperature.service";
 import { DeviceService } from "../../../device/device.service";
 import { HomeService } from "../../../home/home.service";
+import { pathsApi } from "../../../../common/PathsApi";
 
 @WebSocketGateway()
 export class TemperatureGateway
@@ -32,7 +33,7 @@ export class TemperatureGateway
 
   // ? Изменение температуры в доме, через сокеты
   // ? Задает температуру в доме, возвращает, комнату с изменной температурой и список устройств с измененными состояниями
-  @SubscribeMessage("setDegrees")
+  @SubscribeMessage(pathsApi.temperature.setDegrees.path)
   async handleMessage(
     client: Socket,
     payload: { degrees: number; homeId: number },
@@ -99,7 +100,7 @@ export class TemperatureGateway
       devices: returnDevicesArr,
     };
 
-    this.server.emit("setDegrees", setDegreesResponse);
+    this.server.emit(pathsApi.temperature.setDegrees.path, setDegreesResponse);
   }
 
   afterInit(server: Server) {

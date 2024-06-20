@@ -9,31 +9,32 @@ import {
 } from "@nestjs/common";
 import { RoomService } from "./room.service";
 import { TRoomRequest, TRoomResponse } from "../../common/RoomTypes";
+import { pathsApi } from "../../common/PathsApi";
 
-@Controller("/api/smart")
+@Controller()
 export class RoomController {
   constructor(private readonly _roomService: RoomService) {}
 
-  @Get("/rooms")
+  @Get(pathsApi.room.findAll.path)
   findAll(): Promise<TRoomResponse[]> {
     return this._roomService.getAll();
   }
-  @Get("/room/:id")
+  @Get(pathsApi.room.findOne.path + ":id")
   findOne(@Param("id") id: number): Promise<TRoomResponse> {
     return this._roomService.getOne(id);
   }
 
-  @Post("/room/create")
+  @Post(pathsApi.room.create.path)
   create(@Body() room: TRoomRequest): Promise<TRoomResponse> {
     return this._roomService.create(room);
   }
 
-  @Put("/home/update")
+  @Put(pathsApi.room.update.path)
   update(@Body() { id, ...room }: TRoomResponse): Promise<TRoomResponse> {
     return this._roomService.update(id, room);
   }
 
-  @Delete("/room/delete/:id")
+  @Delete(pathsApi.room.delete.path + ":id")
   delete(@Param("id") id: number): Promise<boolean> {
     return this._roomService.delete(id);
   }

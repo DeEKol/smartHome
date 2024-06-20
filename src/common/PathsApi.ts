@@ -2,77 +2,77 @@ export const pathsApi: TPaths = {
   home: {
     findAll: {
       transfer: "get",
-      path: "/api/smart/homes",
+      path: "api/smart/homes",
     },
     findOne: {
       transfer: "get",
-      path: "/api/smart/home/",
+      path: "api/smart/home/",
     },
     create: {
       transfer: "post",
-      path: "/api/smart/home",
+      path: "api/smart/home/create",
     },
     update: {
       transfer: "put",
-      path: "/api/smart/home/update",
+      path: "api/smart/home/update",
     },
     delete: {
       transfer: "delete",
-      path: "/api/smart/home/",
+      path: "api/smart/home/",
     },
   },
   room: {
     findAll: {
       transfer: "get",
-      path: "/api/smart/rooms",
+      path: "api/smart/rooms",
     },
     findOne: {
       transfer: "get",
-      path: "/api/smart/room/",
+      path: "api/smart/room/",
     },
     create: {
       transfer: "post",
-      path: "/api/smart/room",
+      path: "api/smart/room/create",
     },
     update: {
       transfer: "put",
-      path: "/api/smart/room/update",
+      path: "api/smart/room/update",
     },
     delete: {
       transfer: "delete",
-      path: "/api/smart/room/",
+      path: "api/smart/room/",
     },
   },
   device: {
     findAll: {
       transfer: "get",
-      path: "/api/smart/devices",
+      path: "api/smart/devices",
     },
     findOne: {
       transfer: "get",
-      path: "/api/smart/device/",
+      path: "api/smart/device/",
     },
     create: {
       transfer: "post",
-      path: "/api/smart/device",
+      path: "api/smart/device/create",
     },
     update: {
       transfer: "put",
-      path: "/api/smart/device/update",
+      path: "api/smart/device/update",
     },
     delete: {
       transfer: "delete",
-      path: "/api/smart/device/",
+      path: "api/smart/device/",
     },
   },
   temperature: {
     findAll: {
       transfer: "get",
-      path: "/api/smart/temperatures",
+      path: "api/smart/temperatures",
     },
     update: {
       transfer: "put",
-      path: "/api/smart/temperature/update",
+      path: "api/smart/temperature/update",
     },
     setDegrees: {
       transfer: "ws",

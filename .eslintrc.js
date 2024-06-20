@@ -14,6 +14,12 @@ module.exports = {
   rules: {
     // Общие правила
     // "prettier/prettier": 0,
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
   },
   overrides: [
     {
