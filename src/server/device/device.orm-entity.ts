@@ -7,7 +7,19 @@ import {
 } from "typeorm";
 import { RoomOrmEntity } from "../room/room.orm-entity";
 
-@Entity("Device", {})
+type TDeviceType =
+  | "bulb"
+  | "switcher"
+  | "thermostat"
+  | "fan"
+  | "conditioner"
+  | "socket"
+  | "waterLink"
+  | "doorLink"
+  | "windowLink"
+  | "radiatorControl";
+
+@Entity("Device")
 export class DeviceOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,13 +28,19 @@ export class DeviceOrmEntity {
   name: string;
 
   @Column()
-  status: string;
-
-  @Column()
   x: number;
 
   @Column()
   y: number;
+
+  @Column()
+  type: TDeviceType;
+
+  @Column()
+  isSmart: boolean;
+
+  @Column()
+  status: string;
 
   @ManyToOne(() => RoomOrmEntity, (room) => room.id)
   @JoinColumn({ name: "roomId" })

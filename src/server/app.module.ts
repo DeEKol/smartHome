@@ -10,6 +10,8 @@ import { RoomModule } from "./room/room.module";
 import { DeviceModule } from "./device/device.module";
 import { UserModule } from "./user/user.module";
 import { UserOrmEntity } from "./user/user.orm-entity";
+import { TemperatureOrmEntity } from "./smart/sensor/temperature/temperature.orm-entity";
+import { TemperatureModule } from "./smart/sensor/temperature/temperature.module";
 
 @Module({
   imports: [
@@ -32,6 +34,7 @@ import { UserOrmEntity } from "./user/user.orm-entity";
           RoomOrmEntity,
           DeviceOrmEntity,
           UserOrmEntity,
+          TemperatureOrmEntity,
         ],
         synchronize: true,
       }),
@@ -40,6 +43,7 @@ import { UserOrmEntity } from "./user/user.orm-entity";
     HomeModule,
     RoomModule,
     DeviceModule,
+    TemperatureModule,
   ],
   controllers: [AppController],
 })

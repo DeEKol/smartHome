@@ -24,8 +24,8 @@ export class RoomController {
   }
 
   @Post("/room/create")
-  create(@Body() home: TRoomRequest): Promise<TRoomResponse> {
-    return this._roomService.create(home);
+  create(@Body() room: TRoomRequest): Promise<TRoomResponse> {
+    return this._roomService.create(room);
   }
 
   @Put("/home/update")

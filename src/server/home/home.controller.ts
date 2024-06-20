@@ -9,31 +9,32 @@ import {
 } from "@nestjs/common";
 import { HomeService } from "./home.service";
 import { THomeRequest, THomeResponse } from "../../common/HomeTypes";
+import { pathsApi } from "../../common/PathsApi";
 
-@Controller("/api/smart")
+@Controller()
 export class HomeController {
   constructor(private readonly _homeService: HomeService) {}
 
-  @Get("/homes")
+  @Get(pathsApi.home.findAll.path)
   findAll(): Promise<THomeResponse[]> {
     return this._homeService.getAll();
   }
-  @Get("/home/:id")
+  @Get(pathsApi.home.findOne.path + ":id")
   findOne(@Param("id") id: number): Promise<THomeResponse> {
     return this._homeService.getOne(id);
   }
 
-  @Post("/home/create")
+  @Post(pathsApi.home.create.path)
   create(@Body() home: THomeRequest): Promise<THomeResponse> {
     return this._homeService.create(home);
   }
 
-  @Put("/home/update")
+  @Put(pathsApi.home.update.path)
   update(@Body() { id, ...home }: THomeResponse): Promise<THomeResponse> {
     return this._homeService.update(id, home);
   }
 
-  @Delete("/home/delete/:id")
+  @Delete(pathsApi.home.delete.path + ":id")
   delete(@Param("id") id: number): Promise<boolean> {
     return this._homeService.delete(id);
   }

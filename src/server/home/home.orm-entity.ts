@@ -7,4 +7,7 @@ export class HomeOrmEntity {
 
   @Column({ unique: true })
   name: string;
+
+  @Column()
+  temperature: number;
 }

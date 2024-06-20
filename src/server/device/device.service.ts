@@ -12,7 +12,9 @@ export class DeviceService {
   ) {}
 
   async getAll(): Promise<TDeviceResponse[]> {
-    return this._deviceRepository.find({ relations: ["roomId"] });
+    return this._deviceRepository.find({
+      relations: ["roomId", "roomId.homeId"],
+    });
   }
 
   async getOne(deviceId: number): Promise<TDeviceResponse> {
@@ -20,7 +22,7 @@ export class DeviceService {
       where: {
         id: deviceId,
       },
-      relations: ["roomId"],
+      relations: ["roomId", "roomId.homeId"],
     });
   }
 
@@ -34,7 +36,7 @@ export class DeviceService {
   ): Promise<TDeviceResponse> {
     const deviceFromDb: TDeviceResponse = await this._deviceRepository.findOne({
       where: { id: deviceId },
-      relations: ["roomId"],
+      relations: ["roomId", "roomId.homeId"],
     });
 
     const newDevice: TDeviceResponse = {
