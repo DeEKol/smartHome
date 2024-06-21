@@ -63,15 +63,10 @@ export class AuthController {
         throw new UnauthorizedException("Unauthorized access");
       }
 
-      console.log(process.env.JWT_SECRET);
-
       const decoded = await jwt.verify(token, process.env.JWT_SECRET);
-
-      console.log("decoded", decoded);
 
       const user = await this._userService.getOne(Number(decoded.sub));
       // res.status(200).json(user);
-      console.log(user);
       return { id: user.id, username: user.username };
     } catch (error) {
       throw new UnauthorizedException("Unauthorized access");

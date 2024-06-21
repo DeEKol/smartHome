@@ -27,7 +27,6 @@ export class RoomController {
   findAllForHome(
     @Param("homeName") homeName: string,
   ): Promise<TRoomResponse[]> {
-    console.log(homeName);
     return this._roomService.getAllForHome(homeName);
   }
   @Get(pathsApi.room.findOne.path + ":id")

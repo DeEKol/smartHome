@@ -17,7 +17,6 @@
     const rect = event.target.getBoundingClientRect();
     clickX = event.clientX - rect.left;
     clickY = event.clientY - rect.top;
-    console.log(clickX, clickY);
 
     if (isCreateDevice) {
       isOpenModal = true;

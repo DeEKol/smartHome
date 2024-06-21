@@ -138,7 +138,6 @@ export const authApi = {
     }
   },
   login: async (user: TUserRequest): Promise<AxiosResponse<TLoginResponse>> => {
-    console.log(localStorage.getItem("accessToken"));
     try {
       return await apiClient[pathsApi.auth.login.transfer](
         pathsApi.auth.login.path,

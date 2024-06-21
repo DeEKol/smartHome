@@ -20,7 +20,6 @@
   }
 
   const onHandleBtn = (device: TDeviceResponse) => {
-      console.log(device)
 
       if (device.status === "disabled") device.status = "low";
       else if (device.status === "low") device.status = "medium"

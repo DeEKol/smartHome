@@ -89,7 +89,6 @@
         }
 
         try {
-            console.log($homeStore.rooms)
             for (const room of $homeStore.rooms) {
                 const response: AxiosResponse<TDeviceResponse[]> = await deviceApi.findOneForRoomId(room.id);
                 devicesStore.update(prevState => [...prevState, ...response.data])

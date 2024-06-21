@@ -20,7 +20,7 @@
     let roomName;
 
     const onLogin = async (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         if (username === '' || password === '') {
             authStore.set({error: 'Please fill in both fields.'});
         } else {
@@ -32,6 +32,8 @@
                     userStore.set(response.data.user);
                     localStorage.setItem("accessToken", response.data.accessToken);
                     authStore.set({error: undefined});
+                    location.reload();
+
                 } else {
                   authStore.set({error:'Invalid username or password.'});
 
@@ -67,7 +69,6 @@
             const response = await roomsApi.findAllForHome(homename);
             const responseHome = await homeApi.findOneForName(homename);
 
-            console.log(response)
 
             homeStore.set({
                 home: responseHome.data,
@@ -130,7 +131,6 @@
 
     const onChangeTemp = async () => {
         const socket = io("");
-        console.log("s")
 
         socket.emit(pathsApi.temperature.setDegrees.path, {"degrees": temp, "homeId": $homeStore?.home.id})
         homeStore.update(prevState => {
@@ -141,7 +141,6 @@
 
     $: if (homename) roomsInHome(homename);
 
-    $: console.log($homeStore.home?.temperature)
 
 </script>
 
