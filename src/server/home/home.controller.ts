@@ -14,6 +14,7 @@ import { pathsApi } from "../../common/PathsApi";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 
 @Controller()
+@UseGuards(JwtAuthGuard)
 export class HomeController {
   constructor(private readonly _homeService: HomeService) {}
 

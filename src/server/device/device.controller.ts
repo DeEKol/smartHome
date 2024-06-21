@@ -6,13 +6,16 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from "@nestjs/common";
 import { DeviceService } from "./device.service";
 import { DeviceOrmEntity } from "./device.orm-entity";
 import { TDeviceRequest, TDeviceResponse } from "../../common/DeviceTypes";
 import { pathsApi } from "../../common/PathsApi";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 
 @Controller()
+@UseGuards(JwtAuthGuard)
 export class DeviceController {
   constructor(private readonly _deviceService: DeviceService) {}
 
@@ -20,6 +23,12 @@ export class DeviceController {
   findAll(): Promise<TDeviceResponse[]> {
     return this._deviceService.getAll();
   }
+
+  @Get(pathsApi.device.findOneForRoomId.path + ":id")
+  findOneForRoomId(@Param("id") id: number): Promise<DeviceOrmEntity[]> {
+    return this._deviceService.getAllForRoomId(id);
+  }
+
   @Get(pathsApi.device.findOne.path + ":id")
   findOne(@Param("id") id: number): Promise<DeviceOrmEntity> {
     return this._deviceService.getOne(id);

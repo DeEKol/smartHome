@@ -8,6 +8,8 @@ import { DeviceOrmEntity } from "../../../device/device.orm-entity";
 import { HomeOrmEntity } from "../../../home/home.orm-entity";
 import { HomeService } from "../../../home/home.service";
 import { TemperatureGateway } from "./temperature.gateway";
+import { RoomOrmEntity } from "../../../room/room.orm-entity";
+import { RoomService } from "../../../room/room.service";
 
 @Module({
   imports: [
@@ -15,12 +17,14 @@ import { TemperatureGateway } from "./temperature.gateway";
       TemperatureOrmEntity,
       HomeOrmEntity,
       DeviceOrmEntity,
+      RoomOrmEntity,
     ]),
   ],
   providers: [
     TemperatureService,
     HomeService,
     DeviceService,
+    RoomService,
     TemperatureGateway,
   ],
   controllers: [TemperatureController],

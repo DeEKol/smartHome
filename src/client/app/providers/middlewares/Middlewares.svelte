@@ -5,11 +5,10 @@
     import {type AxiosResponse} from "axios";
     import {type THomeResponse} from "../../../../common/HomeTypes";
     import { authApi, deviceApi, homeApi, roomsApi } from "shared/clientApi/clientApi";
-    import { authStore, devicesStore, homesStore, homeStore, userStore } from "../stores/stores";
+    import {authStore, devicesStore, homesStore, homeStore, userStore} from "../stores/stores";
     import {type TDeviceResponse} from "../../../../common/DeviceTypes";
     import {io} from "socket.io-client";
     import {pathsApi} from "../../../../common/PathsApi";
-    import { type TLoginResponse } from "../../../../common/AuthTypes";
     import { type TUserResponse } from "../../../../common/UserTypes";
 
     onMount(async () => {
@@ -61,6 +60,11 @@
                 return prevState;
             })
 
+            homeStore.update((prevState) => {
+                prevState.home.temperature = data.home.temperature;
+                return prevState;
+            })
+
             // ? Обновляем статусы девайсов в сторе при изменнии температуры
             devicesStore.update((prevState) => {
                 const newState = prevState;
@@ -85,8 +89,11 @@
         }
 
         try {
-            const response: AxiosResponse<TDeviceResponse[]> = await deviceApi.findAll();
-            devicesStore.set([...response.data])
+            console.log($homeStore.rooms)
+            for (const room of $homeStore.rooms) {
+                const response: AxiosResponse<TDeviceResponse[]> = await deviceApi.findOneForRoomId(room.id);
+                devicesStore.update(prevState => [...prevState, ...response.data])
+            }
         } catch (error) {
             console.warn(error)
         }

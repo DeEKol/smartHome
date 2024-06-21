@@ -1,39 +1,51 @@
 <script lang="ts">
   import { deviceApi } from "shared/clientApi/clientApi";
   import { type TDeviceType } from "../../../../common/DeviceTypes";
-
-  let name = '';
-  let type: TDeviceType = 'bulb';
-
-  // Создание массива строк для селектора
-  const typesArr = ["bulb", "switcher", "thermostat", "fan", "conditioner",
-    "socket", "waterLink", "doorLink", "windowLink", "radiatorControl"] as const;
-  // Утилита для проверки соответствия
-  function checkTypeAliases<T extends readonly string[]>(array: T) {
-    return array;
-  }
-  // Проверка, что массив включает все алиасы из типа
-  export const typeAliases: TDeviceType[] = checkTypeAliases(typesArr);
+  import {devicesStore} from "app/providers/stores/stores";
+  import {typesArr} from "widgets/Device/types";
+  import {translation} from "widgets/Device/translation";
 
   export let x;
   export let y;
-  const xRound = Math.round(x);
-  function handleSubmit(event) {
-    event.preventDefault();
-    console.log('Имя:', name);
-    console.log('Тип:', type);
-    console.log('x:', x);
-    console.log('y:', y);
+  export let closeModal;
 
-    deviceApi.create({
-      name: name,
-      type: type,
-      x: 12,
-      y: 31,
-      isSmart: true,
-      status: "disabled",
-      roomId: 1,
-    })
+  let name = '';
+  let type: TDeviceType = 'bulb';
+  let roomId;
+  let iError;
+
+  const xRound = Math.round(x);
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    const startStatus = (_type: string) => {
+      if (_type === "waterLink" || _type === "doorLink" || _type === "windowLink") {
+        return "tracking"
+      } else {
+        return "disabled"
+      }
+    }
+
+    try {
+      const responseDevice = await deviceApi.create({
+        name: String(name),
+        type: String(type),
+        x: Math.round(x - 20),
+        y: Math.round(y - 20),
+        isSmart: true,
+        status: startStatus(type),
+        roomId: +roomId,
+      })
+
+      devicesStore.update(prevState => [...prevState, responseDevice.data])
+
+
+      iError = false;
+      closeModal();
+    } catch (error) {
+      iError = true;
+      console.warn(error);
+    }
   }
 </script>
 
@@ -45,11 +57,14 @@
   <select id="type" bind:value={type} required>
     <option value="" disabled selected>Выберите тип</option>
     {#each typesArr as type}
-      <option value={type}>{type}</option>
+      <option value={type}>{translation[type]}</option>
     {/each}
   </select>
-
-  <button type="submit">Отправить</button>
+  <input id="roomId" placeholder="id" type="number" bind:value={roomId} required />
+  <button type="submit">Создать</button>
+  {#if iError}
+    <p>Ошибка</p>
+  {/if}
 </form>
 
 <style>

@@ -72,6 +72,10 @@ export const pathsApi: TPaths = {
       transfer: "delete",
       path: "api/smart/device/",
     },
+    findOneForRoomId: {
+      transfer: "get",
+      path: "api/smart/devicesroom/",
+    },
   },
   temperature: {
     findAll: {
@@ -132,6 +136,7 @@ type TDevicePaths = {
   create: TApiMethod;
   update: TApiMethod;
   delete: TApiMethod;
+  findOneForRoomId: TApiMethod;
 };
 
 type THomePaths = {

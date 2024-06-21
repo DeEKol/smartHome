@@ -6,12 +6,15 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from "@nestjs/common";
 import { RoomService } from "./room.service";
 import { TRoomRequest, TRoomResponse } from "../../common/RoomTypes";
 import { pathsApi } from "../../common/PathsApi";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 
 @Controller()
+@UseGuards(JwtAuthGuard)
 export class RoomController {
   constructor(private readonly _roomService: RoomService) {}
 

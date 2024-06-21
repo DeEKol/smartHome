@@ -12,5 +12,6 @@
       color: var(--color, #dcdee0);
       border: 1px solid var(--border-color, #262b7c);
       border-radius: 8px;
+      cursor: pointer;
     }
 </style>

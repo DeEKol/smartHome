@@ -3,17 +3,30 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, Repository } from "typeorm";
 import { DeviceOrmEntity } from "./device.orm-entity";
 import { TDeviceRequest, TDeviceResponse } from "../../common/DeviceTypes";
+import { RoomOrmEntity } from "../room/room.orm-entity";
 
 @Injectable()
 export class DeviceService {
   constructor(
     @InjectRepository(DeviceOrmEntity)
     private readonly _deviceRepository: Repository<DeviceOrmEntity>,
+    @InjectRepository(RoomOrmEntity)
+    private readonly _roomRepository: Repository<RoomOrmEntity>,
   ) {}
 
   async getAll(): Promise<TDeviceResponse[]> {
     return this._deviceRepository.find({
       relations: ["roomId", "roomId.homeId"],
+    });
+  }
+
+  async getAllForRoomId(roomId: number): Promise<TDeviceResponse[]> {
+    const room = await this._roomRepository.findOne({ where: { id: roomId } });
+
+    return this._deviceRepository.find({
+      // @ts-ignore
+      where: { roomId: room },
+      relations: ["roomId"],
     });
   }
 

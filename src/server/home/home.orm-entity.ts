@@ -13,5 +13,5 @@ export class HomeOrmEntity {
   temperature: number;
 
   @OneToMany(() => RoomOrmEntity, (room) => room.homeId)
-  rooms: RoomOrmEntity[];
+  rooms?: RoomOrmEntity[];
 }
