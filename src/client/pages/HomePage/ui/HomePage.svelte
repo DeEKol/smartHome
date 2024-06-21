@@ -76,7 +76,7 @@
         <div class="device">
           <p>{translation[device.type]}</p>
           <p>{device.name} №{device.id}</p>
-          <ButtonUI onClick={() => onDeleteDevice(device.id)}>delete</ButtonUI>
+          <ButtonUI --background-color="red" onClick={() => onDeleteDevice(device.id)}>delete</ButtonUI>
           <img src={"shared/images/" + device.type + ".png"} class="img" alt="conditioner" />
           <!--{#if device.type === "fan" || device.type === "radiatorControl" || device.type === "conditioner"}-->
           <!--  <button class="btn-smart" class:isNotSmart={!device.isSmart} on:click={() => onSmartBtn(device)}>smart</button>-->
