@@ -20,6 +20,10 @@ export const pathsApi: TPaths = {
       transfer: "delete",
       path: "api/smart/home/",
     },
+    findOneForName: {
+      transfer: "get",
+      path: "api/smart/homename/",
+    },
   },
   room: {
     findAll: {
@@ -41,6 +45,10 @@ export const pathsApi: TPaths = {
     delete: {
       transfer: "delete",
       path: "api/smart/room/",
+    },
+    findAllForHome: {
+      transfer: "get",
+      path: "api/smart/roomshome/",
     },
   },
   device: {
@@ -79,6 +87,38 @@ export const pathsApi: TPaths = {
       path: "setDegrees",
     },
   },
+  user: {
+    findAll: {
+      transfer: "get",
+      path: "api/smart/users",
+    },
+    findOne: {
+      transfer: "get",
+      path: "api/smart/user/",
+    },
+    create: {
+      transfer: "post",
+      path: "api/smart/user/create",
+    },
+    update: {
+      transfer: "put",
+      path: "api/smart/user/update",
+    },
+    delete: {
+      transfer: "delete",
+      path: "api/smart/user/",
+    },
+  },
+  auth: {
+    check: {
+      transfer: "get",
+      path: "api/smart/auth/check",
+    },
+    login: {
+      transfer: "post",
+      path: "api/smart/auth/login",
+    },
+  },
 };
 
 type TApiMethod = {
@@ -100,6 +140,7 @@ type THomePaths = {
   create: TApiMethod;
   update: TApiMethod;
   delete: TApiMethod;
+  findOneForName: TApiMethod;
 };
 
 type TRoomPaths = {
@@ -108,6 +149,7 @@ type TRoomPaths = {
   create: TApiMethod;
   update: TApiMethod;
   delete: TApiMethod;
+  findAllForHome: TApiMethod;
 };
 
 type TTemperaturePaths = {
@@ -116,9 +158,24 @@ type TTemperaturePaths = {
   setDegrees: TApiMethod;
 };
 
+type TUserPaths = {
+  findAll: TApiMethod;
+  findOne: TApiMethod;
+  create: TApiMethod;
+  update: TApiMethod;
+  delete: TApiMethod;
+};
+
+type TAuthPaths = {
+  check: TApiMethod;
+  login: TApiMethod;
+};
+
 type TPaths = {
   device: TDevicePaths;
   home: THomePaths;
   room: TRoomPaths;
   temperature: TTemperaturePaths;
+  user: TUserPaths;
+  auth: TAuthPaths;
 };

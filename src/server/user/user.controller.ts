@@ -9,6 +9,7 @@ import {
 } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { TUserRequest, TUserResponse } from "../../common/UserTypes";
+import { UserOrmEntity } from "./user.orm-entity";
 
 @Controller("/api/smart")
 export class UserController {
@@ -29,7 +30,7 @@ export class UserController {
   }
 
   @Put("/user/update")
-  update(@Body() { id, ...home }: TUserResponse): Promise<TUserResponse> {
+  update(@Body() { id, ...home }: UserOrmEntity): Promise<TUserResponse> {
     return this._homeService.update(id, home);
   }
 

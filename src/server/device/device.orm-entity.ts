@@ -6,18 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { RoomOrmEntity } from "../room/room.orm-entity";
-
-type TDeviceType =
-  | "bulb"
-  | "switcher"
-  | "thermostat"
-  | "fan"
-  | "conditioner"
-  | "socket"
-  | "waterLink"
-  | "doorLink"
-  | "windowLink"
-  | "radiatorControl";
+import { TDeviceType } from "../../common/DeviceTypes";
 
 @Entity("Device")
 export class DeviceOrmEntity {

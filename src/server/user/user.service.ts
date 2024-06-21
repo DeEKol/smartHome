@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { UserOrmEntity } from "./user.orm-entity";
 import { DeleteResult, Repository } from "typeorm";
 import { TUserRequest, TUserResponse } from "../../common/UserTypes";
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class UserService {
@@ -11,20 +12,33 @@ export class UserService {
     private readonly _userRepository: Repository<UserOrmEntity>,
   ) {}
 
-  async getAll(): Promise<TUserResponse[]> {
+  async getAll(): Promise<UserOrmEntity[]> {
     return this._userRepository.find();
   }
 
-  async getOne(homeId: number): Promise<TUserResponse> {
+  async getOne(userId: number): Promise<UserOrmEntity> {
     return this._userRepository.findOne({
       where: {
-        id: homeId,
+        id: userId,
       },
     });
   }
 
-  async create(home: TUserRequest): Promise<TUserResponse> {
-    return this._userRepository.save(home);
+  async getOneForName(username: string): Promise<UserOrmEntity> {
+    return this._userRepository.findOne({
+      where: {
+        username: username,
+      },
+    });
+  }
+
+  async create(home: TUserRequest): Promise<UserOrmEntity> {
+    const hashedPassword = await bcrypt.hash(home.password, 3);
+
+    return this._userRepository.save({
+      username: home.username,
+      password: hashedPassword,
+    });
   }
 
   async update(

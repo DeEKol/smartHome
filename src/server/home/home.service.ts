@@ -23,6 +23,14 @@ export class HomeService {
     });
   }
 
+  async getOneForName(name: string): Promise<THomeResponse> {
+    return this._homeRepository.findOne({
+      where: {
+        name: name,
+      },
+    });
+  }
+
   async create(home: THomeRequest): Promise<THomeResponse> {
     return this._homeRepository.save(home);
   }

@@ -11,6 +11,7 @@ import { UserModule } from "./user/user.module";
 import { UserOrmEntity } from "./user/user.orm-entity";
 import { TemperatureOrmEntity } from "./smart/sensor/temperature/temperature.orm-entity";
 import { TemperatureModule } from "./smart/sensor/temperature/temperature.module";
+import { AuthModule } from "./auth/auth.module";
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { TemperatureModule } from "./smart/sensor/temperature/temperature.module
     RoomModule,
     DeviceModule,
     TemperatureModule,
+    AuthModule,
   ],
   controllers: [],
 })

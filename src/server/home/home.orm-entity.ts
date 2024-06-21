@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { RoomOrmEntity } from "../room/room.orm-entity";
 
 @Entity("Home", {})
 export class HomeOrmEntity {
@@ -10,4 +11,7 @@ export class HomeOrmEntity {
 
   @Column()
   temperature: number;
+
+  @OneToMany(() => RoomOrmEntity, (room) => room.homeId)
+  rooms: RoomOrmEntity[];
 }

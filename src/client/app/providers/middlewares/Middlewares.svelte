@@ -4,17 +4,54 @@
     import {onMount} from "svelte";
     import {type AxiosResponse} from "axios";
     import {type THomeResponse} from "../../../../common/HomeTypes";
-    import {deviceApi, homeApi} from "shared/clientApi/clientApi";
-    import {devicesStore, homesStore} from "../stores/stores";
+    import { authApi, deviceApi, homeApi, roomsApi } from "shared/clientApi/clientApi";
+    import { authStore, devicesStore, homesStore, homeStore, userStore } from "../stores/stores";
     import {type TDeviceResponse} from "../../../../common/DeviceTypes";
     import {io} from "socket.io-client";
     import {pathsApi} from "../../../../common/PathsApi";
+    import { type TLoginResponse } from "../../../../common/AuthTypes";
+    import { type TUserResponse } from "../../../../common/UserTypes";
 
     onMount(async () => {
+        try {
+          const roomsInHome = async () => {
+            const homename = localStorage.getItem("currentHomeName");
+
+            try {
+              const response = await roomsApi.findAllForHome(homename);
+              const responseHome = await homeApi.findOneForName(homename);
+
+              homeStore.set({
+                home: responseHome.data,
+                rooms: response.data
+              });
+
+              localStorage.setItem("currentHomeName", responseHome.data.name);
+            } catch (error) {
+              authStore.set({ error: error.message });
+            }
+          }
+
+          await roomsInHome();
+        } catch (error) {
+          console.log(error);
+        }
+
+
+        try {
+            const response: AxiosResponse<TUserResponse> = await authApi.check();
+            userStore.set(response.data);
+        } catch (e) {
+            authStore.set({ error: e.message });
+            userStore.set({
+                id: undefined,
+                username: "",
+            });
+        }
+
         const socket = io("");
 
         socket.on(pathsApi.temperature.setDegrees.path, (data) => {
-            console.log(data)
             // ? Обновляем температуру дома в сторе при изменнии температуры
             homesStore.update((prevState) => {
                 const index = prevState.findIndex(item => item.id === data.home.id);

@@ -19,6 +19,14 @@ export class RoomController {
   findAll(): Promise<TRoomResponse[]> {
     return this._roomService.getAll();
   }
+
+  @Get(pathsApi.room.findAllForHome.path + ":homeName")
+  findAllForHome(
+    @Param("homeName") homeName: string,
+  ): Promise<TRoomResponse[]> {
+    console.log(homeName);
+    return this._roomService.getAllForHome(homeName);
+  }
   @Get(pathsApi.room.findOne.path + ":id")
   findOne(@Param("id") id: number): Promise<TRoomResponse> {
     return this._roomService.getOne(id);
